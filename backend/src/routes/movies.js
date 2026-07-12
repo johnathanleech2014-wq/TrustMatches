@@ -3,7 +3,6 @@ const router = express.Router();
 const Movie = require('../models/Movie');
 const auth = require('../middleware/auth');
 
-// Get all movies
 router.get('/', async (req, res, next) => {
   try {
     const { genre, year, page = 1, limit = 50 } = req.query;
@@ -39,7 +38,6 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-// Get movie by ID
 router.get('/:id', async (req, res, next) => {
   try {
     const movie = await Movie.findByIdAndUpdate(
@@ -58,7 +56,6 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-// Get trending movies
 router.get('/trending/all', async (req, res, next) => {
   try {
     const movies = await Movie.find()

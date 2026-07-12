@@ -3,7 +3,6 @@ const router = express.Router();
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 
-// Register
 router.post('/register', async (req, res, next) => {
   try {
     const { username, email, password, firstName, lastName } = req.body;
@@ -17,14 +16,7 @@ router.post('/register', async (req, res, next) => {
       return res.status(409).json({ success: false, message: 'User already exists' });
     }
 
-    const user = new User({
-      username,
-      email,
-      password,
-      firstName,
-      lastName,
-    });
-
+    const user = new User({ username, email, password, firstName, lastName });
     await user.save();
 
     const token = jwt.sign(
@@ -37,18 +29,13 @@ router.post('/register', async (req, res, next) => {
       success: true,
       message: 'User registered successfully',
       token,
-      user: {
-        id: user._id,
-        username: user.username,
-        email: user.email,
-      },
+      user: { id: user._id, username: user.username, email: user.email },
     });
   } catch (error) {
     next(error);
   }
 });
 
-// Login
 router.post('/login', async (req, res, next) => {
   try {
     const { username, password } = req.body;
@@ -76,12 +63,7 @@ router.post('/login', async (req, res, next) => {
     res.json({
       success: true,
       token,
-      user: {
-        id: user._id,
-        username: user.username,
-        email: user.email,
-        subscription: user.subscription,
-      },
+      user: { id: user._id, username: user.username, email: user.email, subscription: user.subscription },
     });
   } catch (error) {
     next(error);

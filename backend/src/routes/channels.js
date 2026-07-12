@@ -3,7 +3,6 @@ const router = express.Router();
 const Channel = require('../models/Channel');
 const auth = require('../middleware/auth');
 
-// Get all channels
 router.get('/', async (req, res, next) => {
   try {
     const { category, country, quality, page = 1, limit = 50 } = req.query;
@@ -37,7 +36,6 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-// Get channel by ID
 router.get('/:id', async (req, res, next) => {
   try {
     const channel = await Channel.findById(req.params.id);
@@ -50,7 +48,6 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-// Get channels by category
 router.get('/category/:category', async (req, res, next) => {
   try {
     const channels = await Channel.find({

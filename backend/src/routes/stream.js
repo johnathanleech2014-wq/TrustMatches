@@ -4,7 +4,6 @@ const auth = require('../middleware/auth');
 const Channel = require('../models/Channel');
 const Movie = require('../models/Movie');
 
-// Get stream URL for channel
 router.get('/channel/:id', auth, async (req, res, next) => {
   try {
     const channel = await Channel.findById(req.params.id);
@@ -13,7 +12,6 @@ router.get('/channel/:id', auth, async (req, res, next) => {
       return res.status(404).json({ success: false, message: 'Channel not found' });
     }
 
-    // Check subscription if premium
     if (channel.isPremium && req.user.subscription.plan === 'free') {
       return res.status(403).json({ success: false, message: 'Premium subscription required' });
     }
@@ -29,7 +27,6 @@ router.get('/channel/:id', auth, async (req, res, next) => {
   }
 });
 
-// Get stream URL for movie
 router.get('/movie/:id', auth, async (req, res, next) => {
   try {
     const movie = await Movie.findById(req.params.id);
@@ -38,7 +35,6 @@ router.get('/movie/:id', auth, async (req, res, next) => {
       return res.status(404).json({ success: false, message: 'Movie not found' });
     }
 
-    // Check subscription if premium
     if (movie.isPremium && req.user.subscription.plan === 'free') {
       return res.status(403).json({ success: false, message: 'Premium subscription required' });
     }

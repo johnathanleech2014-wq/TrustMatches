@@ -3,7 +3,6 @@ const router = express.Router();
 const Channel = require('../models/Channel');
 const Movie = require('../models/Movie');
 
-// Global search
 router.get('/', async (req, res, next) => {
   try {
     const { q, type } = req.query;

@@ -3,7 +3,6 @@ const router = express.Router();
 const User = require('../models/User');
 const auth = require('../middleware/auth');
 
-// Get user profile
 router.get('/profile', auth, async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id)
@@ -16,7 +15,6 @@ router.get('/profile', auth, async (req, res, next) => {
   }
 });
 
-// Update profile
 router.put('/profile', auth, async (req, res, next) => {
   try {
     const { firstName, lastName, avatar } = req.body;
@@ -32,7 +30,6 @@ router.put('/profile', auth, async (req, res, next) => {
   }
 });
 
-// Get watch history
 router.get('/watch-history', auth, async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id);
