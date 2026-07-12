@@ -1,0 +1,368 @@
+.tv-player-container {
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 100%);
+  color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.tv-player-container.loading,
+.tv-player-container.error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.tv-player-container.error {
+  background: #1a0a0a;
+}
+
+.tv-player-container.error p {
+  font-size: 18px;
+  margin: 10px 0;
+  color: #ff6b6b;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 212, 255, 0.2);
+  border-top: 4px solid #00d4ff;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.tv-player {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.player-header {
+  background: rgba(15, 15, 15, 0.95);
+  border-bottom: 2px solid #00d4ff;
+  padding: 20px;
+  text-align: center;
+}
+
+.player-header h1 {
+  margin: 0;
+  font-size: 32px;
+  color: #00d4ff;
+}
+
+.channel-count {
+  margin: 5px 0 0 0;
+  color: #aaa;
+  font-size: 14px;
+}
+
+.player-main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.video-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #000;
+}
+
+.video-player {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  min-height: 400px;
+}
+
+.video-player video {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.now-playing {
+  background: rgba(0, 212, 255, 0.1);
+  border-top: 1px solid #00d4ff;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.channel-logo {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.channel-info h2 {
+  margin: 0;
+  color: #00d4ff;
+  font-size: 20px;
+}
+
+.channel-info .channel-group {
+  margin: 5px 0 0 0;
+  color: #aaa;
+  font-size: 12px;
+}
+
+.no-channel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-size: 18px;
+}
+
+.sidebar {
+  width: 350px;
+  background: rgba(20, 20, 35, 0.9);
+  border-left: 1px solid #00d4ff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.groups-section {
+  padding: 15px;
+  border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.groups-section h3 {
+  margin: 0 0 10px 0;
+  color: #00d4ff;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.groups-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.groups-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.groups-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.groups-list::-webkit-scrollbar-thumb {
+  background: #00d4ff;
+  border-radius: 3px;
+}
+
+.group-btn {
+  padding: 6px 12px;
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  color: #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+
+.group-btn:hover {
+  background: rgba(0, 212, 255, 0.2);
+  border-color: #00d4ff;
+}
+
+.group-btn.active {
+  background: #00d4ff;
+  border-color: #00d4ff;
+  color: #000;
+  font-weight: bold;
+}
+
+.search-section {
+  padding: 10px;
+  border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px;
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 4px;
+  color: #fff;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.search-input::placeholder {
+  color: #666;
+}
+
+.search-input:focus {
+  outline: none;
+  background: rgba(0, 212, 255, 0.2);
+  border-color: #00d4ff;
+}
+
+.channels-section {
+  flex: 1;
+  padding: 15px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.channels-section h3 {
+  margin: 0 0 10px 0;
+  color: #00d4ff;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.channels-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.channels-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.channels-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.channels-list::-webkit-scrollbar-thumb {
+  background: #00d4ff;
+  border-radius: 3px;
+}
+
+.channel-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background: rgba(0, 212, 255, 0.05);
+  border: 1px solid rgba(0, 212, 255, 0.1);
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: all 0.3s;
+}
+
+.channel-item:hover {
+  background: rgba(0, 212, 255, 0.15);
+  border-color: rgba(0, 212, 255, 0.3);
+  transform: translateX(5px);
+}
+
+.channel-item.active {
+  background: rgba(0, 212, 255, 0.3);
+  border-color: #00d4ff;
+}
+
+.channel-item-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.5);
+  flex-shrink: 0;
+}
+
+.channel-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.channel-item-name {
+  margin: 0;
+  color: #fff;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 280px;
+  }
+
+  .player-header h1 {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .player-main {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    border-left: none;
+    border-top: 1px solid #00d4ff;
+  }
+
+  .video-player {
+    min-height: 300px;
+  }
+
+  .groups-list {
+    max-height: 80px;
+  }
+
+  .player-header h1 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tv-player-container {
+    height: auto;
+  }
+
+  .sidebar {
+    max-height: 250px;
+  }
+
+  .video-player {
+    min-height: 200px;
+  }
+
+  .player-header h1 {
+    font-size: 18px;
+  }
+
+  .channel-logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .channel-info h2 {
+    font-size: 16px;
+  }
+}
