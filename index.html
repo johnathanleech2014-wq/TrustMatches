@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrustMatches - IPTV Streaming Service</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 100%);
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        header {
+            background: rgba(15, 15, 15, 0.95);
+            padding: 20px 0;
+            border-bottom: 2px solid #00d4ff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #00d4ff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #00d4ff;
+        }
+
+        .hero {
+            padding: 100px 0;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(0, 212, 255, 0.1) 0%, transparent 100%);
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #00d4ff, #0099cc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            color: #cccccc;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #00d4ff, #0099cc);
+            color: #000;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 18px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+        }
+
+        .features {
+            padding: 80px 0;
+        }
+
+        .features h2 {
+            font-size: 40px;
+            margin-bottom: 50px;
+            text-align: center;
+            color: #00d4ff;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-card:hover {
+            background: rgba(0, 212, 255, 0.1);
+            border-color: #00d4ff;
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 10px;
+            color: #00d4ff;
+        }
+
+        .feature-card p {
+            color: #cccccc;
+            font-size: 14px;
+        }
+
+        .tech-stack {
+            padding: 80px 0;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .tech-stack h2 {
+            font-size: 40px;
+            margin-bottom: 50px;
+            text-align: center;
+            color: #00d4ff;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .tech-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .tech-item h4 {
+            color: #00d4ff;
+            margin-bottom: 10px;
+        }
+
+        .tech-item p {
+            color: #cccccc;
+            font-size: 14px;
+        }
+
+        .status {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .status h2 {
+            font-size: 40px;
+            margin-bottom: 30px;
+            color: #00d4ff;
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: rgba(0, 212, 255, 0.2);
+            border: 2px solid #00d4ff;
+            padding: 15px 30px;
+            border-radius: 50px;
+            margin: 15px;
+            font-weight: bold;
+            color: #00d4ff;
+        }
+
+        footer {
+            background: rgba(15, 15, 15, 0.95);
+            padding: 30px 0;
+            border-top: 2px solid #00d4ff;
+            text-align: center;
+            margin-top: 80px;
+            color: #cccccc;
+        }
+
+        footer a {
+            color: #00d4ff;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 15px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .features h2,
+            .tech-stack h2 {
+                font-size: 28px;
+            }
+
+            .feature-grid,
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">
+                    <span>🎬</span> TrustMatches
+                </a>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#tech">Technology</a></li>
+                    <li><a href="#status">Status</a></li>
+                    <li><a href="https://github.com/johnathanleech2016-prog/TrustMatches" target="_blank">GitHub</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>🎬 TrustMatches IPTV Service</h1>
+            <p>A comprehensive IPTV streaming service with thousands of worldwide channels and VOD movies</p>
+            <button class="cta-button">Coming Soon</button>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="container">
+            <h2>Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Global Coverage</h3>
+                    <p>Live TV from 150+ countries with thousands of worldwide channels</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎥</div>
+                    <h3>Extensive VOD Library</h3>
+                    <p>Movies and series from around the world</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Cross-Platform</h3>
+                    <p>Stream on Web, Mobile (iOS/Android), and Smart TV</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Secure Authentication</h3>
+                    <p>User accounts and subscription management with JWT tokens</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>High Performance</h3>
+                    <p>Adaptive bitrate streaming for optimal viewing experience</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Smart Discovery</h3>
+                    <p>Advanced search, categories, and personalized recommendations</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tech-stack" id="tech">
+        <div class="container">
+            <h2>Technology Stack</h2>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <h4>Backend</h4>
+                    <p>Node.js • Express.js • MongoDB</p>
+                </div>
+                <div class="tech-item">
+                    <h4>Frontend</h4>
+                    <p>React • Redux • Material-UI</p>
+                </div>
+                <div class="tech-item">
+                    <h4>Streaming</h4>
+                    <p>HLS/DASH • FFmpeg</p>
+                </div>
+                <div class="tech-item">
+                    <h4>Caching</h4>
+                    <p>Redis</p>
+                </div>
+                <div class="tech-item">
+                    <h4>Search</h4>
+                    <p>Elasticsearch</p>
+                </div>
+                <div class="tech-item">
+                    <h4>Authentication</h4>
+                    <p>JWT Tokens</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="status" id="status">
+        <div class="container">
+            <h2>Project Status</h2>
+            <div>
+                <span class="status-badge">✅ User Authentication</span>
+                <span class="status-badge">✅ Channel Management</span>
+                <span class="status-badge">✅ VOD Catalog</span>
+                <span class="status-badge">✅ Streaming URLs</span>
+                <span class="status-badge">✅ Watch History</span>
+                <span class="status-badge">✅ Global Search</span>
+                <span class="status-badge">✅ Subscription Plans</span>
+                <span class="status-badge">✅ MongoDB Integration</span>
+                <span class="status-badge">✅ Redis Caching</span>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 TrustMatches. All rights reserved.</p>
+            <p><a href="https://github.com/johnathanleech2016-prog/TrustMatches" target="_blank">View on GitHub</a></p>
+        </div>
+    </footer>
+</body>
+</html>
