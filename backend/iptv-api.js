@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
-const parser = require('iptv-playlist-parser');
 
 const app = express();
 app.use(cors());
@@ -13,6 +12,42 @@ let playlistCache = {
   timestamp: null,
   CACHE_DURATION: 3600000 // 1 hour in milliseconds
 };
+
+/**
+ * Parse M3U playlist format
+ */
+function parseM3U(content) {
+  const lines = content.split('\n');
+  const items = [];
+  let currentItem = null;
+
+  for (const line of lines) {
+    if (line.startsWith('#EXTINF:')) {
+      // Parse metadata line
+      const metaMatch = line.match(/#EXTINF:.*,(.+)$/);
+      const name = metaMatch ? metaMatch[1].trim() : 'Unknown';
+      
+      const logoMatch = line.match(/tvg-logo="([^"]+)"/);
+      const logo = logoMatch ? logoMatch[1] : '';
+      
+      const groupMatch = line.match(/group-title="([^"]+)"/);
+      const group = groupMatch ? groupMatch[1] : 'Uncategorized';
+
+      currentItem = {
+        name: name,
+        logo: logo,
+        group: group,
+        url: null
+      };
+    } else if (line.trim() && !line.startsWith('#') && currentItem) {
+      currentItem.url = line.trim();
+      items.push(currentItem);
+      currentItem = null;
+    }
+  }
+
+  return { items };
+}
 
 /**
  * Fetch and parse M3U playlist
@@ -28,7 +63,7 @@ async function fetchPlaylist(url) {
 
     console.log('Fetching fresh playlist from:', url);
     const response = await axios.get(url, { timeout: 30000 });
-    const parsed = parser.parse(response.data);
+    const parsed = parseM3U(response.data);
     
     // Update cache
     playlistCache.data = parsed;
@@ -51,16 +86,15 @@ app.get('/api/channels', async (req, res) => {
     const playlist = await fetchPlaylist(m3uUrl);
     
     // Format channels with additional metadata
-    const channels = playlist.items.map((item, index) => ({
-      id: index,
-      name: item.name,
-      tvg: item.tvg || '',
-      tvgId: item.tvgId || '',
-      tvgName: item.tvgName || '',
-      logo: item.logo || '',
-      url: item.url,
-      group: item.group || 'Uncategorized'
-    }));
+    const channels = playlist.items
+      .filter(item => item.url) // Only valid channels
+      .map((item, index) => ({
+        id: index,
+        name: item.name,
+        logo: item.logo,
+        url: item.url,
+        group: item.group
+      }));
 
     res.json({
       success: true,
@@ -85,23 +119,22 @@ app.get('/api/channels/:id', async (req, res) => {
     const playlist = await fetchPlaylist(m3uUrl);
     const id = parseInt(req.params.id);
     
-    if (id < 0 || id >= playlist.items.length) {
+    const validChannels = playlist.items.filter(item => item.url);
+    
+    if (id < 0 || id >= validChannels.length) {
       return res.status(404).json({
         success: false,
         error: 'Channel not found'
       });
     }
 
-    const item = playlist.items[id];
+    const item = validChannels[id];
     const channel = {
       id: id,
       name: item.name,
-      tvg: item.tvg || '',
-      tvgId: item.tvgId || '',
-      tvgName: item.tvgName || '',
-      logo: item.logo || '',
+      logo: item.logo,
       url: item.url,
-      group: item.group || 'Uncategorized'
+      group: item.group
     };
 
     res.json({
@@ -128,6 +161,7 @@ app.get('/api/groups', async (req, res) => {
     // Extract unique groups
     const groups = [...new Set(
       playlist.items
+        .filter(item => item.url)
         .map(item => item.group || 'Uncategorized')
         .filter(Boolean)
     )].sort();
@@ -156,15 +190,14 @@ app.get('/api/groups/:name', async (req, res) => {
     const groupName = decodeURIComponent(req.params.name);
     
     const channels = playlist.items
+      .filter(item => item.url && item.group === groupName)
       .map((item, index) => ({
         id: index,
         name: item.name,
-        tvg: item.tvg || '',
-        logo: item.logo || '',
+        logo: item.logo,
         url: item.url,
-        group: item.group || 'Uncategorized'
-      }))
-      .filter(channel => channel.group === groupName);
+        group: item.group
+      }));
 
     res.json({
       success: true,
